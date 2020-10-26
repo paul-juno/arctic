@@ -1,0 +1,473 @@
+# the IP(s) on which your node server is running. I chose port 8888.
+upstream app_geowaycode {
+    server 127.0.0.1:8888;
+    keepalive 8;
+}
+
+# the nginx server instance
+server {
+    server_name geowaycode.com
+                www.geowaycode.com
+                about.geowaycode.com
+                accounts.geowaycode.com
+                admin.geowaycode.com
+                ads.geowaycode.com
+                affiliate.geowaycode.com
+                api.geowaycode.com
+                apps.geowaycode.com
+                blog.geowaycode.com
+                brand.geowaycode.com
+                bugs.geowaycode.com
+                business.geowaycode.com
+                careers.geowaycode.com
+                cdn.geowaycode.com
+                contact.geowaycode.com
+                core.geowaycode.com
+                developer.geowaycode.com
+                docs.geowaycode.com
+                download.geowaycode.com
+                embed.geowaycode.com
+                feedback.geowaycode.com
+                graph.geowaycode.com
+                improve.geowaycode.com
+                investor.geowaycode.com
+                legal.geowaycode.com
+                mail.geowaycode.com
+                me.geowaycode.com
+                news.geowaycode.com
+                partner.geowaycode.com
+                redirect.geowaycode.com
+                report.geowaycode.com
+                shop.geowaycode.com
+                sitemap.geowaycode.com
+                start.geowaycode.com
+                status.geowaycode.com
+                support.geowaycode.com
+                ;
+    access_log /var/log/nginx/geowaycode.com.log;
+
+    # pass the request to the node.js server with the correct headers
+    # and much more can be added, see nginx config options
+    location / {
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header Host $http_host;
+      proxy_set_header X-NginX-Proxy true;
+      
+      add_header X-Robots-Tag "noindex, nofollow, nosnippet, noarchive";
+
+      proxy_pass http://app_geowaycode/;
+      proxy_redirect off;
+    }
+
+    listen [::]:443 ssl ipv6only=on; # managed by Certbot
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/geowaycode.com/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/geowaycode.com/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+server {
+    server_name assets.geowaycode.com;
+
+    root /var/www/geowaycode/assets;
+
+    location / {
+        # First attempt to serve request as file, then
+        # as directory, then fall back to displaying a 404.
+        try_files $uri $uri/ =404;
+    }
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/geowaycode.com/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/geowaycode.com/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
+
+server {
+    server_name static.geowaycode.com;
+
+    root /var/www/geowaycode/static;
+
+    location / {
+        # First attempt to serve request as file, then
+        # as directory, then fall back to displaying a 404.
+        try_files $uri $uri/ =404;
+    }
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/geowaycode.com/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/geowaycode.com/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
+
+server {
+    if ($host = support.geowaycode.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = status.geowaycode.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = start.geowaycode.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = sitemap.geowaycode.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = shop.geowaycode.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = report.geowaycode.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = redirect.geowaycode.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = partner.geowaycode.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = news.geowaycode.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = me.geowaycode.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = mail.geowaycode.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = legal.geowaycode.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = investor.geowaycode.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = improve.geowaycode.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = graph.geowaycode.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = feedback.geowaycode.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = embed.geowaycode.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = download.geowaycode.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = docs.geowaycode.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = developer.geowaycode.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = core.geowaycode.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = contact.geowaycode.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = cdn.geowaycode.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = careers.geowaycode.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = business.geowaycode.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = bugs.geowaycode.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = brand.geowaycode.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = blog.geowaycode.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = apps.geowaycode.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = api.geowaycode.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = affiliate.geowaycode.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = ads.geowaycode.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = admin.geowaycode.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = accounts.geowaycode.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = about.geowaycode.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = www.geowaycode.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = geowaycode.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    listen 80;
+    listen [::]:80;
+    server_name geowaycode.com
+                www.geowaycode.com
+                about.geowaycode.com
+                accounts.geowaycode.com
+                admin.geowaycode.com
+                ads.geowaycode.com
+                affiliate.geowaycode.com
+                api.geowaycode.com
+                apps.geowaycode.com
+                blog.geowaycode.com
+                brand.geowaycode.com
+                bugs.geowaycode.com
+                business.geowaycode.com
+                careers.geowaycode.com
+                cdn.geowaycode.com
+                contact.geowaycode.com
+                core.geowaycode.com
+                developer.geowaycode.com
+                docs.geowaycode.com
+                download.geowaycode.com
+                embed.geowaycode.com
+                feedback.geowaycode.com
+                graph.geowaycode.com
+                improve.geowaycode.com
+                investor.geowaycode.com
+                legal.geowaycode.com
+                mail.geowaycode.com
+                me.geowaycode.com
+                news.geowaycode.com
+                partner.geowaycode.com
+                redirect.geowaycode.com
+                report.geowaycode.com
+                shop.geowaycode.com
+                sitemap.geowaycode.com
+                start.geowaycode.com
+                status.geowaycode.com
+                support.geowaycode.com
+                ;
+    return 404; # managed by Certbot
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+server {
+    if ($host = assets.geowaycode.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    listen 80;
+    server_name assets.geowaycode.com;
+    return 404; # managed by Certbot
+
+
+}
+
+server {
+    if ($host = static.geowaycode.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    listen 80;
+    server_name static.geowaycode.com;
+    return 404; # managed by Certbot
+
+
+}
